@@ -2,19 +2,17 @@
 
 namespace App\Http\Controllers;
 
-use Illuminate\Http\Request;
+use App\Http\Requests\StoreQuestion;
+use App\Question;
 
 class QuestionController extends Controller
 {
-    public function __invoke(Request $request)
+    public function __invoke(StoreQuestion $request)
     {
-        /**
-         * Под вопросом, правильно или нет
-         */
-        $this->validate($request, [
-            'name' => 'required|max:255' ,
-            'email' => '',
-            'question' => ''
-        ]);
+        $question = new Question();
+        $question->text = $request->text;
+        $question->save();
+        flash('Ваш вопрос отправлен, после того как он пройдет обработку, он будет опубликован в разделe FAQ', 'success');
+        return redirect('faq');
     }
 }

@@ -6,6 +6,7 @@
 
 	<link href='http://fonts.googleapis.com/css?family=Open+Sans:400,300,600,700' rel='stylesheet' type='text/css'>
 
+	<link rel="stylesheet" href="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/css/bootstrap.min.css">
 	<link rel="stylesheet" href="{{ url('css/reset.css') }}">
 	<link rel="stylesheet" href="{{ url('css/style.css') }}">
 	<script src="{{ url('js/modernizr.js') }}"></script>
@@ -15,6 +16,25 @@
 <header>
 	<h1>FAQ Template</h1>
 </header>
+@if (count($errors) > 0)
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <div class="alert alert-warning">
+		        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+		        {{ $error }}
+		    	</div>
+            @endforeach
+        </ul>
+    </div>
+@endif
+@if (session()->has('flash_notification.message'))
+    <div class="alert alert-{{ session('flash_notification.level') }}">
+        <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
+
+        {{ session('flash_notification.message') }}
+    </div>
+@endif
 <section class="cd-faq">
 	<ul class="cd-faq-categories">
 		<li><a class="selected" href="#basics">Basics</a></li>
@@ -30,10 +50,10 @@
 			{{ csrf_field() }}
 			<label for="email">Ваша почта</label>
 			<input type="email" name="email">
-			<label for="name">Ваше имя</label>
-			<input type="text" name="name">
-			<label for="question">Вопрос</label>
-			<input type="text" name="question">
+			<label for="author_name">Ваше имя</label>
+			<input type="text" name="author_name">
+			<label for="text">Вопрос</label>
+			<input type="text" name="text">
 			<button type="submit">Отправить</button>
 		</form>
 		<ul id="basics" class="cd-faq-group">
@@ -248,5 +268,12 @@
 <script src="{{ url('js/jquery-2.1.1.js') }}"></script>
 <script src="{{ url('js/jquery.mobile.custom.min.js') }}"></script>
 <script src="{{ url('js/main.js') }}"></script>
+<!-- This is only necessary if you do Flash::overlay('...') -->
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="//maxcdn.bootstrapcdn.com/bootstrap/3.3.5/js/bootstrap.min.js"></script>
+
+<script>
+    $('#flash-overlay-modal').modal();
+</script>
 </body>
 </html>
