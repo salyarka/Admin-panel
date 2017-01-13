@@ -15,9 +15,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/faq', function () {
-    return view('faq');
-});
+Route::get('/faq', 'FaqController');
 
 Route::post('/faq', 'QuestionController');
 
