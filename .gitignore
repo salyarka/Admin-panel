@@ -3,6 +3,8 @@
 /storage/
 /vendor
 /.idea
+/resources/views/admin_panel
+/public
 Homestead.json
 Homestead.yaml
 .env
