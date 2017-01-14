@@ -10,31 +10,30 @@
 	<meta content='width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=0' name='viewport' />
     <meta name="viewport" content="width=device-width" />
 
-
     <!-- Bootstrap core CSS     -->
-    <link href="admin_panel/assets/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="{{ url('css/admin_panel/bootstrap.min.css') }}" rel="stylesheet" />
 
     <!-- Animation library for notifications   -->
-    <link href="admin_panel/assets/css/animate.min.css" rel="stylesheet"/>
+    <link href="{{ url('css/admin_panel/animate.min.css') }}" rel="stylesheet"/>
 
     <!--  Light Bootstrap Table core CSS    -->
-    <link href="admin_panel/assets/css/light-bootstrap-dashboard.css" rel="stylesheet"/>
+    <link href="{{ url('css/admin_panel/light-bootstrap-dashboard.css') }}" rel="stylesheet"/>
 
 
     <!--  CSS for Demo Purpose, don't include it in your project     -->
-    <link href="admin_panel/assets/css/demo.css" rel="stylesheet" />
+    <link href="{{ url('css/admin_panel/demo.css') }}" rel="stylesheet" />
 
 
     <!--     Fonts and icons     -->
     <link href="http://maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet">
     <link href='http://fonts.googleapis.com/css?family=Roboto:400,700,300' rel='stylesheet' type='text/css'>
-    <link href="admin_panel/assets/css/pe-icon-7-stroke.css" rel="stylesheet" />
+    <link href="{{ url('css/admin_panel/pe-icon-7-stroke.css') }}" rel="stylesheet" />
 
 </head>
 <body>
 
 <div class="wrapper">
-    <div class="sidebar" data-color="purple" data-image="admin_panel/assets/img/sidebar-5.jpg">
+    <div class="sidebar" data-color="purple" data-image="{{ url('img/admin_panel/sidebar-5.jpg') }}">
 
     <!--
 
@@ -52,7 +51,7 @@
 
             <ul class="nav">
                 <li class="active">
-                    <a href="admin_panel/dashboard.html">
+                    <a href="{{ url('admin_panel/dashboard.html') }}">
                         <i class="pe-7s-graph"></i>
                         <p>Dashboard</p>
                     </a>
@@ -416,26 +415,26 @@
 </body>
 
     <!--   Core JS Files   -->
-    <script src="admin_panel/assets/js/jquery-1.10.2.js" type="text/javascript"></script>
-	<script src="admin_panel/assets/js/bootstrap.min.js" type="text/javascript"></script>
+    <script src="{{ url('js/admin_panel/jquery-1.10.2.js') }}" type="text/javascript"></script>
+	<script src="{{ url('js/admin_panel/bootstrap.min.js') }}" type="text/javascript"></script>
 
 	<!--  Checkbox, Radio & Switch Plugins -->
-	<script src="admin_panel/assets/js/bootstrap-checkbox-radio-switch.js"></script>
+	<script src="{{ url('js/admin_panel/bootstrap-checkbox-radio-switch.js') }}"></script>
 
 	<!--  Charts Plugin -->
-	<script src="admin_panel/assets/js/chartist.min.js"></script>
+	<script src="{{ url('js/admin_panel/chartist.min.js') }}"></script>
 
     <!--  Notifications Plugin    -->
-    <script src="admin_panel/assets/js/bootstrap-notify.js"></script>
+    <script src="{{ url('js/admin_panel/bootstrap-notify.js') }}"></script>
 
     <!--  Google Maps Plugin    -->
     <script type="text/javascript" src="https://maps.googleapis.com/maps/api/js?sensor=false"></script>
 
     <!-- Light Bootstrap Table Core javascript and methods for Demo purpose -->
-	<script src="admin_panel/assets/js/light-bootstrap-dashboard.js"></script>
+	<script src="{{ url('js/admin_panel/light-bootstrap-dashboard.js') }}"></script>
 
 	<!-- Light Bootstrap Table DEMO methods, don't include it in your project! -->
-	<script src="admin_panel/assets/js/demo.js"></script>
+	<script src="{{ url('js/admin_panel/demo.js') }}"></script>
 
 	<script type="text/javascript">
     	$(document).ready(function(){

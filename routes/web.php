@@ -22,3 +22,7 @@ Route::post('/faq', 'QuestionController');
 Route::get('/admins', function () {
     return view('admins');
 });
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index');
