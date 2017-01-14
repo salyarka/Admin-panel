@@ -25,14 +25,11 @@ class Question extends Model
 
     /**
      * Define relationship.
+     *
+     * @return Illuminate\Database\Eloquent\Relations\belongsTo
      */
     public function topic() 
     {
         return $this->belongsTo('App\Topic');
-    }
-
-    public function scopeAnswered($query)
-    {
-        return $query->whereNotNull('answer'); // Корректно ли делать такой запрос? возвомжно использовать whereNotNull
     }
 }

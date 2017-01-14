@@ -4,19 +4,21 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Topic;
+use App\Question;
+
 
 class FaqController extends Controller
 {
+    /**
+     * Display a faq with answered questions
+     *
+     * @param  Request  $request
+     * @return Response
+     **/
     public function __invoke(Request $request)
     {
-        // REMAKE
         $topics = Topic::all();
-        // $questions = Topic::with()->questions;
-        $answered = Topic::find(1)->questions()->whereNotNull('answer')->get();
-        // $answered = Topic::find(1)->answered();
-        $unAnswered = Topic::find(1)->questions()->whereNull('answer')->get(); 
-        // $topic->Topicquestions()->whereNotNull('answer');
-        return view('faq', ['topics' => $topics, 'answered' => $answered, 'unAnswered' => $unAnswered
-                            ]);
+        $questions = Topic::answeredQuestions();
+        return view('faq', ['topics' => $topics,'questions' => $questions]);
     }
 }

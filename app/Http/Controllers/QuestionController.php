@@ -7,6 +7,12 @@ use App\Question;
 
 class QuestionController extends Controller
 {
+    /**
+     * Store the question
+     * 
+     * @param  StoreQuestion  $request.
+     * @return Response
+     */
     public function __invoke(StoreQuestion $request)
     {
         $question = new Question();
