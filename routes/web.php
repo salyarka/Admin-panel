@@ -16,13 +16,10 @@ Route::get('/', function () {
 });
 
 Route::get('/faq', 'FaqController');
-
 Route::post('/faq', 'QuestionController');
 
-Route::get('/admins', function () {
-    return view('admins');
-});
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index');
+// ADD Route::group(['middleware' => ... 
+Route::get('/admins', 'AdminController@show');
+Route::post('/admins', 'AdminController@add');
+Route::put('/admins/{admin}', 'AdminController@edit');
+Route::delete('/admins/{admin}', 'AdminController@delete');
