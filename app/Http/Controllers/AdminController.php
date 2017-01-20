@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use Illuminate\Support\Facades\Hash;
 use App\Http\Requests\AddAdmin;
 use App\Http\Requests\EditAdmin;
 use Illuminate\Http\Request;
@@ -43,9 +44,17 @@ class AdminController extends Controller
      * 
      * @return [type] [description]
      */
-    public function edit(EditAdmin $request)
+    public function edit(EditAdmin $request, $id)
     {
-
+        $admin = Admin::find($id);
+        $admin->login = $request->new_login;
+        $admin->surname = $request->new_surname;
+        $admin->name = $request->new_name;
+        if (strlen($request->new_password) > 0) {
+            $admin->password = Hash::make($request['new_password']);
+        }
+        $admin->save();
+        return redirect('admins');
     }
 
     /**

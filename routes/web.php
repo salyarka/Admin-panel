@@ -18,8 +18,13 @@ Route::get('/', function () {
 Route::get('/faq', 'FaqController');
 Route::post('/faq', 'QuestionController');
 
+Route::get('/login', function () {
+    return view('login');
+});
+// Route::post('/login', );
+
 // ADD Route::group(['middleware' => ... 
 Route::get('/admins', 'AdminController@show');
 Route::post('/admins', 'AdminController@add');
-Route::put('/admins/{admin}', 'AdminController@edit');
-Route::delete('/admins/{admin}', 'AdminController@delete');
+Route::put('/admins/{id}', 'AdminController@edit');
+Route::delete('/admins/{id}', 'AdminController@delete');

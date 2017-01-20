@@ -40,6 +40,7 @@ class AddAdmin extends FormRequest
     public function messages()
     {
         return [
+            'login.unique' => 'Такой логин уже существует.',
             'login.required' => 'Поле логин обязательно для заполнения.',
             'login.max'  => 'Слишком длинный логин.',
             'surname.required'  => 'Фамилия обязательна для заполения.',
@@ -50,7 +51,7 @@ class AddAdmin extends FormRequest
             'password.required' => 'Пароль обязателен для заполнения.',
             'password.min' => 'Пароль должен содержать минимум 6 символов.',
             'password_confirmation.required' => 'Подтверждение обязательно для заполнения.',
-            'password.min' => 'Пароль не совпадает с подтверждением.'
+            'password_confirmation.min' => 'Пароль не совпадает с подтверждением.'
         ];
     }
 }
