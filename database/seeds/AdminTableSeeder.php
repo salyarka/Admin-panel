@@ -1,5 +1,6 @@
 <?php
 
+use Illuminate\Support\Facades\Hash;
 use Illuminate\Database\Seeder;
 
 class AdminTableSeeder extends Seeder
@@ -32,7 +33,14 @@ class AdminTableSeeder extends Seeder
                 'name' => 'Enny',
                 'password' => '123',
                 'permissions' => 'admin',
-            ]
+            ],
+            [
+                'login' => 'admin',
+                'surname' => 'admin',
+                'name' => 'admin',
+                'password' => Hash::make('admin'),
+                'permissions' => 'mainAdmin',
+            ],
         ]);
     }
 }

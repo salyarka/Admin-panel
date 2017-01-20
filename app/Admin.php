@@ -34,4 +34,20 @@ class Admin extends Authenticatable
     protected $hidden = [
         'password', 'remember_token'
     ];
+
+    // public function getRememberToken()
+    // {
+    //     return null; // not supported
+    // }
+
+    public function setRememberToken($value)
+    {
+        return null;
+    }
+
+    // public function getRememberTokenName()
+    // {
+    //     return null; // not supported
+    // }
+
 }

@@ -21,10 +21,18 @@ Route::post('/faq', 'QuestionController');
 Route::get('/login', function () {
     return view('login');
 });
-// Route::post('/login', );
-
+Route::post('/login', 'AuthController@login');
+Route::get('/logout', 'AuthController@logout');
+    
 // ADD Route::group(['middleware' => ... 
-Route::get('/admins', 'AdminController@show');
-Route::post('/admins', 'AdminController@add');
-Route::put('/admins/{id}', 'AdminController@edit');
-Route::delete('/admins/{id}', 'AdminController@delete');
+Route::group(['middleware' => ['auth']], function () {
+    Route::group(['middleware' => ['auth']], function () {
+        Route::get('/admins', 'AdminController@show');
+        Route::post('/admins', 'AdminController@add');
+        Route::put('/admins/{id}', 'AdminController@edit');
+        Route::delete('/admins/{id}', 'AdminController@delete');
+    });
+    Route::group(['middleware' => ['auth']], function () {
+
+    });
+});
