@@ -22,8 +22,8 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $fillable = [
-        'login', 'surname', 'name',
-        'password', 'permissions'
+        'login', 'surname',
+        'name', 'role'
     ];
 
     /**
@@ -32,7 +32,7 @@ class Admin extends Authenticatable
      * @var array
      */
     protected $hidden = [
-        'password', 'remember_token'
+        'password'
     ];
 
     // public function getRememberToken()
