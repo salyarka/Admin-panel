@@ -22,7 +22,7 @@ Route::get('/login', function () {
     return view('login');
 });
 Route::post('/login', 'AuthController@login');
-Route::get('/logout', 'AuthController@logout');
+Route::get('/logout', 'AuthController@logout')->middleware('auth');
     
 Route::group(['middleware' => ['auth']], function () {
     // add questions routes

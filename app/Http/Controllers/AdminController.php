@@ -62,8 +62,10 @@ class AdminController extends Controller
      * 
      * @return [type] [description]
      */
-    public function delete()
+    public function delete(Request $request, $id)
     {
-
+        $admin = Admin::find($id);
+        $admin->delete();
+        return redirect('/admins');
     }
 }
