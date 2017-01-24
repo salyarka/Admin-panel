@@ -28,13 +28,15 @@
     <div class="header">
       <h3>Администраторы</h3>
     </div>
+
     {{-- ADD ADMIN --}}
     <div class="col-sm-3 sidenav">
       <div class="card">
         <div class="panel-heading">Добавление нового администратора</div>
           <div class="panel-body">
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/admins') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin') }}">
               {{ csrf_field() }}
+
               {{-- LOGIN  --}}
               <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }}">
                 <label for="login" class="col-md-4 control-label">Логин</label>
@@ -47,6 +49,7 @@
                   @endif
                 </div>
               </div>
+
               {{-- SURNAME --}}
               <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
                 <label for="surname" class="col-md-4 control-label">Фамилия</label>
@@ -59,6 +62,7 @@
                   @endif
                 </div>
               </div>
+
               {{-- NAME --}}
               <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
                 <label for="name" class="col-md-4 control-label">Имя</label>
@@ -71,6 +75,7 @@
                   @endif
                 </div>
               </div>
+
               {{-- PASSWORD --}}
               <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
                 <label for="password" class="col-md-4 control-label">Пароль</label>
@@ -83,6 +88,7 @@
                   @endif
                 </div>
               </div>
+
               {{-- CONFIRM --}}
               <div class="form-group">
                 <label for="password-confirm" class="col-md-4 control-label">Подтверждение пароля</label>
@@ -90,6 +96,7 @@
                   <input id="password-confirm" type="password" class="form-control" name="password_confirmation" required>
                 </div>
               </div>
+
               {{-- SUBMIT --}}
               <div class="form-group">
                 <div class="col-md-6 col-md-offset-4">
@@ -98,12 +105,13 @@
                   </button>
                 </div>
               </div>
-                
+
             </form>
           </div>
         </div>
       </div>
     </div> {{-- ADD ADMIN --}}
+
     {{-- SHOW ADMINS --}}
     <div class="col-sm-9">
       <table class="table text-left">
@@ -121,6 +129,7 @@
                 <td>{{ $admin->login }}</td>
                 <td>{{ $admin->surname }}</td>
                 <td>{{ $admin->name }}</td>
+
                 {{-- EDIT --}}
                 <td>
                   <button class="btn btn-info" data-toggle="modal" data-target="#{{ $admin->id }}">
@@ -134,35 +143,41 @@
                           <h4 class="modal-title" id="myModalLabel">Админ</h4>
                         </div>
                         <div class="modal-body">
-                          <form action="{{ url('/admins/' . $admin->id) }}" method="POST">
+                          <form action="{{ url('/admin/' . $admin->id) }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
+
                             {{-- LOGIN --}}
                             <div class="form-group">
                               <label for="new_login">Логин</label>
                               <input type="text" class="form-control" name="new_login" value="{{ $admin->login }}">
                             </div>
+
                             {{-- NAME --}}
                             <div class="form-group">
                               <label for="new_name">Имя</label>
                               <input type="text" class="form-control" name="new_name" value="{{ $admin->name }}">
                             </div>
+
                             {{-- SURNAME --}}
                             <div class="form-group">
                               <label for="new_surname">Фамилия</label>
                               <input type="text" class="form-control" name="new_surname" value="{{ $admin->surname }}">
                             </div>
+
                             {{-- NEW PASSWORD --}}
                             <div>
                               <label for="new_password">Новый пароль</label>
                               <input type="password" class="form-control" name="new_password">
                             </div>
                             <br>
+
                             {{-- CONFIRM --}}
                             <div>
                               <label for="new_password_confirm">Подтверждение</label>
                               <input type="password" class="form-control" name="new_password_confirmation">
-                            </div>  
+                            </div> 
+
                             <br>  
                             <button type="submit" class="btn btn-warning">Изменить и закрыть</button>
                           </form>
@@ -171,6 +186,7 @@
                     </div>
                   </div>
                 </td> {{-- EDIT --}}
+
                 {{-- DELETE --}}
                 <td>
                   <button class="btn btn-danger" data-toggle="modal" data-target="#del{{ $admin->id }}">
@@ -184,7 +200,7 @@
                           <h4 class="modal-title" id="myModalLabel">Подтверждение удаления</h4>
                         </div>
                         <div class="modal-body">
-                          <form action="{{ url('/admins/' . $admin->id) }}" method="POST">
+                          <form action="{{ url('/admin/' . $admin->id) }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <div class="form-group">
@@ -197,6 +213,7 @@
                     </div>
                   </div>
                 </td> {{-- DELETE --}}
+
               </tr> 
             @endif
           @endforeach
