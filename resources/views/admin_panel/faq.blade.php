@@ -10,16 +10,16 @@
       <div class="card">
         <div class="panel-heading">Добавление новой темы</div>
           <div class="panel-body">
-            <form class="form-horizontal" role="form" method="POST" action="{{ url('/admins') }}">
+            <form class="form-horizontal" role="form" method="POST" action="{{ url('/admin/faq') }}">
               {{ csrf_field() }}
               {{-- TITLE  --}}
-              <div class="form-group{{ $errors->has('topic') ? ' has-error' : '' }}">
-                <label for="topic" class="col-md-4 control-label">Название</label>
+              <div class="form-group{{ $errors->has('title') ? ' has-error' : '' }}">
+                <label for="title" class="col-md-4 control-label">Название</label>
                 <div class="col-md-6">
-                  <input id="topic" type="text" class="form-control" name="topic" value="{{ old('topic') }}" required autofocus>
-                  @if ($errors->has('topic'))
+                  <input id="title" type="text" class="form-control" name="title" value="{{ old('title') }}" required autofocus>
+                  @if ($errors->has('title'))
                     <span class="help-block">
-                      <strong>{{ $errors->first('topic') }}</strong>
+                      <strong>{{ $errors->first('title') }}</strong>
                     </span>
                   @endif
                 </div>

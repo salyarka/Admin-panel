@@ -25,7 +25,6 @@ Route::post('/login', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout')->middleware('auth');
     
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    // add questions routes
     Route::group(['middleware' => 'role:superAdmin'], function () {
         Route::get('/', 'AdminController@show');
         Route::post('/', 'AdminController@add');
@@ -33,4 +32,5 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::delete('/{id}', 'AdminController@delete');
     });
     Route::get('/faq', 'FaqController@show');  
+    Route::post('/faq', 'FaqController@add');  
 });

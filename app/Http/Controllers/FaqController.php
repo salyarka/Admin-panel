@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AddTopic;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Topic;
@@ -32,5 +33,18 @@ class FaqController extends Controller
         })->get();
         $view = $this->isAdminRequest($request) ? 'admin_panel.faq' : 'faq';
         return view($view, ['topics' => $topics,'topicsWithAnsweres' => $topicsWithAnsweres]);
+    }
+
+    /**
+     * [add description]
+     * 
+     * @param Request $request [description]
+     */
+    public function add(AddTopic $request)
+    {
+        $topic = new Topic();
+        $topic->title = $request->title;
+        $topic->save();
+        return redirect('admin/faq');
     }
 }
