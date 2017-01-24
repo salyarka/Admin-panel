@@ -33,7 +33,7 @@ class AdminController extends Controller
         $admin->surname = $request->surname;
         $admin->name = $request->name;
         $admin->password = $request->password;
-        $admin->permissions = 'admin';        
+        $admin->role = 'admin';        
         $admin->save();
         flash('Новый администратор успешно добавлен.', 'success');
         return redirect('admins');

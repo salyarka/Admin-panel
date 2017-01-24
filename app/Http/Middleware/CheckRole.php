@@ -21,6 +21,6 @@ class CheckRole
         }
 
         // remake redirect to admins questions and topics
-        return redirect('test');
+        return redirect('/admin/faq');
     }
 }

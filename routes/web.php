@@ -15,7 +15,7 @@ Route::get('/', function () {
     return view('index');
 });
 
-Route::get('/faq', 'FaqController');
+Route::get('/faq', 'FaqController@show');
 Route::post('/faq', 'QuestionController');
 
 Route::get('/login', function () {
@@ -24,15 +24,13 @@ Route::get('/login', function () {
 Route::post('/login', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout')->middleware('auth');
     
-Route::group(['middleware' => ['auth']], function () {
+Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
     // add questions routes
-    Route::group(['middleware' => ['role:superAdmin']], function () {
-        Route::get('/admins', 'AdminController@show');
-        Route::post('/admins', 'AdminController@add');
-        Route::put('/admins/{id}', 'AdminController@edit');
-        Route::delete('/admins/{id}', 'AdminController@delete');
+    Route::group(['middleware' => 'role:superAdmin'], function () {
+        Route::get('/', 'AdminController@show');
+        Route::post('/', 'AdminController@add');
+        Route::put('/{id}', 'AdminController@edit');
+        Route::delete('/{id}', 'AdminController@delete');
     });
-    Route::get('/test', function () {
-    return view('index');
-});    
+    Route::get('/faq', 'FaqController@show');  
 });

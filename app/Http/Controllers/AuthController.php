@@ -21,7 +21,7 @@ class AuthController extends Controller
             'password' => $request->password
         ];
         if (Auth::attempt($adminData)) {
-            return redirect('admins');
+            return redirect('admin');
         } else {
             return ('lalala');
         }

@@ -12,10 +12,12 @@
   <nav class="navbar navbar-inverse">
     <div class="container-fluid">
       <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          <li><a href="">Админы</a></li>
-          <li><a href="">Вопросы</a></li>
-        </ul>
+        @if (Auth::user()->role == 'superAdmin')
+          <ul class="nav navbar-nav">
+            <li><a href="{{ url('/admin')}}">Админы</a></li>
+            <li><a href="{{ url('/admin/faq')}}">Вопросы</a></li>
+          </ul>
+        @endif
         <ul class="nav navbar-nav navbar-right">
           <li><a href="{{ url('/logout')}}"><span class="glyphicon glyphicon-log-in"></span> Выход</a></li>
         </ul>

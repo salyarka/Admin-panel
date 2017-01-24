@@ -3,8 +3,7 @@
 namespace App;
 
 use Illuminate\Database\Eloquent\Model;
-use App\Question;
-use DB;
+use App\Question as Question;
 
 class Topic extends Model
 {
@@ -33,31 +32,33 @@ class Topic extends Model
     }
 
     /**
-     * Get the questions that have an answer.
+     * [totalQuestions description]
      * 
-     * @return Illuminate\Support\Collection
+     * @param  [type] $id [description]
+     * @return [type]     [description]
      */
-    static public function answeredQuestions()
+    public function totalQuestions()
     {
-        return $questions = DB::table('questions')
-                                    ->join('topics', 'questions.topic_id', '=', 'topics.id')
-                                    ->whereNotNull('answer')
-                                    ->get();
+        return $this->hasMany('App\Question')->count();
     }
 
     /**
-     * Checks have the answer questions or not.
+     * [answeredQuestions description]
      * 
-     * @param  string  topic id.
-     * @return boolean
+     * @return [type] [description]
      */
-    public function haveAnsweredQuestions($id)
+    public function publishedQuestions()
     {
-        $query = DB::table('questions')
-                        ->join('topics', 'questions.topic_id', '=', 'topics.id')
-                        ->whereNotNull('answer')
-                        ->where('questions.topic_id', '=', $id)
-                        ->get();
-        return count($query) > 0;
+        return $this->hasMany('App\Question')->where('status', '=', '1')->count();
+    }
+
+    /**
+     * [noAnswerQuestions description]
+     * 
+     * @return [type] [description]
+     */
+    public function noAnswerQuestions()
+    {
+        return $this->hasMany('App\Question')->whereNull('answer')->count();
     }
 }

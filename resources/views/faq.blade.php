@@ -16,6 +16,7 @@
 <header>
 	<h1>FAQ Template</h1>
 </header>
+
 {{-- ERRORS --}}
 @if (count($errors) > 0)
     <div class="alert alert-danger">
@@ -29,6 +30,7 @@
         </ul>
     </div>
 @endif
+
 {{-- FLASH MESSAGES --}}
 @if (session()->has('flash_notification.message'))
     <div class="alert alert-{{ session('flash_notification.level') }}">
@@ -36,6 +38,7 @@
         {{ session('flash_notification.message') }}
     </div>
 @endif
+
 {{-- SIDE SECTION NAVIGATION --}}
 <section class="cd-faq">
 	<ul class="cd-faq-categories">
@@ -64,23 +67,24 @@
             </select>
 			<button type="submit">Отправить</button>
 		</form>
-		{{-- REMAKE --}}
+
+		{{-- TOPICS WITH PUBLISHED ANSWERS --}}
 		@foreach ($topics as $topic)
-			@if ($topic->haveAnsweredQuestions($topic->id))
-				<ul id="basics" class="cd-faq-group">
-					<li class="cd-faq-title"><h2>{{ $topic->title }}</h2></li>	
-					@foreach ($questions as $question)
-						@if ($question->topic_id == $topic->id)
-							<li>
-								<a class="cd-faq-trigger" href="#0">{{ $question->text }}</a>
-								<div class="cd-faq-content">
-									<p>{{ $question->answer }}</p>
-								</div>
-							</li>
-						@endif
-					@endforeach	
-				</ul>
-			@endif
+		@if ($topic->publishedQuestions() > 0)
+			<ul id="basics" class="cd-faq-group">
+				<li class="cd-faq-title"><h2>{{ $topic->title }}</h2></li>	
+				@foreach ($topic->questions as $question)
+					@if ($question->status != 0)
+						<li>
+							<a class="cd-faq-trigger" href="#0">{{ $question->text }}</a>
+							<div class="cd-faq-content">
+								<p>{{ $question->answer }}</p>
+							</div>
+						</li>
+					@endif
+				@endforeach	
+			</ul>
+		@endif	
 		@endforeach
 	</div> <!-- cd-faq-items -->
 	<a href="#0" class="cd-close-panel">Close</a>
