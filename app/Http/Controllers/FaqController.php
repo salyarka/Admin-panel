@@ -17,7 +17,7 @@ class FaqController extends Controller
      */
     public function isAdminRequest(Request $request)
     {
-        return ($request->route()->getPrefix() == '/admin');
+        return ($request->route()->getPrefix() == 'admin/faq');
     }
 
     /**
@@ -28,12 +28,10 @@ class FaqController extends Controller
      **/
     public function show(Request $request)
     {
+        // dd($request->route()->getPrefix());
         $topics = Topic::all();
-        $topicsWithAnsweres = Topic::whereHas('questions', function ($query) {
-            $query->whereNotNull('answer');
-        })->get();
         $view = $this->isAdminRequest($request) ? 'admin_panel.faq' : 'faq';
-        return view($view, ['topics' => $topics,'topicsWithAnsweres' => $topicsWithAnsweres]);
+        return view($view, ['topics' => $topics]);
     }
 
     /**
@@ -60,8 +58,12 @@ class FaqController extends Controller
     }
 
 
-    public function delete()
+    public function delete(Request $request, $id)
     {
-
+        $topic = Topic::find($id);
+        $topic->questions()->delete();
+        $topic->delete();
+        flash('Тема успешно удалена.', 'success');
+        return redirect('admin/faq');
     }
 }

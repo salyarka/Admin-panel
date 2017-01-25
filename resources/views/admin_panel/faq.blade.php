@@ -55,7 +55,11 @@
         <tbody>
           @foreach ($topics as $topic)
             <tr>
-              <td>{{ $topic->title }}</td>
+              <td>
+                <div>
+                  <a href="{{ url('admin/faq/topic/' . $topic->id) }}">{{ $topic->title }}</a>                  
+                </div>
+              </td>
               <td>{{ $topic->totalQuestions() }}</td>
               <td>{{ $topic->publishedQuestions() }}</td>
               <td>{{ $topic->noAnswerQuestions() }}</td>
@@ -94,8 +98,31 @@
 
               {{-- DELETE --}}
               <td>
-                
+                <button class="btn btn-danger" data-toggle="modal" data-target="#del{{ $topic->id }}">
+                    Удалить
+                  </button>
+                  <div class="modal fade" id="del{{ $topic->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">Подтверждение удаления</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form action="{{ url('/admin/faq/' . $topic->id) }}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('DELETE') }}
+                            <div class="form-group">
+                              <h5>Вы точно хотите удалить тему {{ $topic->title }} и все вопросы связанные с ней?</h5>
+                            </div>
+                            <button type="submit" class="btn btn-danger">Удалить</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               </td>{{-- DELETE --}}
+
             </tr> 
           @endforeach
         </tbody>

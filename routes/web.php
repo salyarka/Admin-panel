@@ -25,10 +25,22 @@ Route::post('/login', 'AuthController@login');
 Route::get('/logout', 'AuthController@logout')->middleware('auth');
     
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
-    Route::get('/faq', 'FaqController@show');  
-    Route::post('/faq', 'FaqController@add');
-    Route::put('/faq/{id}', 'FaqController@edit');
-    Route::delete('/faq/{id}', 'FaqController@delete');
+
+    Route::group(['prefix' => 'faq'], function () {
+        Route::get('/', 'FaqController@show');  
+        Route::post('/', 'FaqController@add');
+        Route::put('/{id}', 'FaqController@edit');
+        Route::delete('/{id}', 'FaqController@delete');
+
+        Route::group(['prefix' => 'topic'], function () {
+            Route::get('/{id}', 'TopicController@show');  
+            Route::post('/{id}', 'TopicController@add');
+            Route::put('/{id}/{question_id}', 'TopicController@edit');
+            Route::delete('/{id}/{question_id}', 'TopicController@delete');
+        });
+    });
+
+
 
     Route::group(['middleware' => 'role:superAdmin'], function () {
         Route::get('/', 'AdminController@show');
