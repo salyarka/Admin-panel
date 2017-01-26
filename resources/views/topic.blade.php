@@ -23,6 +23,7 @@
           <tr>
             <th>Текст</th>
             <th>Ответ</th>
+            <th>тема</th>
             <th>Статус</th>
             <th>Дата создания</th>
           </tr>
@@ -39,13 +40,27 @@
               	@endif
               </td>
               <td>
+              	тема
+              </td>
+              <td>
               	@if ($question->answer && $question->status == 1)
               		опубликован
+              		<form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
+                  {{ csrf_field() }}
+                  {{ method_field('PATCH') }}
+                  <button type="submit" class="btn btn-warning">скрыть</button>
+                	</form>
               	@elseif ($question->answer && $question->status == 0)
               		скрыт
+              		 <form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
+                  {{ csrf_field() }}
+                  {{ method_field('PATCH') }}
+                  <button type="submit" class="btn btn-success">восстановить</button>
+                  </form>
               	@elseif (!$question->answer)
               		ожидает ответ
               	@endif
+
               </td>
               <td>{{ Carbon\Carbon::parse($question->created_at)->format('d-m-Y') }}</td>
 
@@ -62,17 +77,28 @@
                           <h4 class="modal-title" id="myModalLabel">Тема</h4>
                         </div>
                         <div class="modal-body">
-                          <form action="{{ url('/admin/faq/topic/' . $question->topc_id . '/' . $question->id) }}" method="POST">
+                          <form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('PUT') }}
 
-                            {{-- NEW TITLE --}}
+                            {{-- NEW TEXT --}}
                             <div class="form-group">
-                              <label for="new_title">Название</label>
-                              <input type="text" class="form-control" name="new_title" value="{{ $question->title }}">
+                              <label for="new_title">Вопрос</label>
+                              <input type="text" class="form-control" name="new_text" value="{{ $question->text }}">
                             </div>
 
-                            <br>  
+                            {{-- NEW ANSWER --}}
+                            <div class="form-group">
+                              <label for="new_title">Ответ</label>
+                              <input type="text" class="form-control" name="new_answer" value="{{ $question->answer }}">
+                            </div>
+
+                            {{-- NEW AUTHOR --}}
+                            <div class="form-group">
+                              <label for="new_title">Имя автора</label>
+                              <input type="text" class="form-control" name="new_author_name" value="{{ $question->author_name }}">
+                            </div>
+
                             <button type="submit" class="btn btn-warning">Изменить и закрыть</button>
                           </form>
                         </div>
@@ -94,11 +120,11 @@
                           <h4 class="modal-title" id="myModalLabel">Подтверждение удаления</h4>
                         </div>
                         <div class="modal-body">
-                          <form action="{{ url('/admin/faq/topic/' . $question->topic_id . '/' . $question->id) }}" method="POST">
+                          <form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
                             {{ csrf_field() }}
                             {{ method_field('DELETE') }}
                             <div class="form-group">
-                              <h5>Вы точно хотите удалить тему {{ $question->title }} и все вопросы связанные с ней?</h5>
+                              <h5>Вы точно хотите удалить вопрос?</h5>
                             </div>
                             <button type="submit" class="btn btn-danger">Удалить</button>
                           </form>

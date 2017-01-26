@@ -44,7 +44,7 @@ class FaqController extends Controller
         $topic = new Topic();
         $topic->title = $request->title;
         $topic->save();
-        return redirect('admin/faq');
+        return redirect()->back();
     }
 
 
@@ -54,7 +54,7 @@ class FaqController extends Controller
         $topic->title = $request->new_title;
         $topic->save();
         flash('Тема успешно изменена.', 'success');
-        return redirect('admin/faq');
+        return redirect()->back();
     }
 
 
@@ -64,6 +64,6 @@ class FaqController extends Controller
         $topic->questions()->delete();
         $topic->delete();
         flash('Тема успешно удалена.', 'success');
-        return redirect('admin/faq');
+        return redirect()->back();
     }
 }

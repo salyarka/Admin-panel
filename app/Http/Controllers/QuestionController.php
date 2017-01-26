@@ -22,6 +22,6 @@ class QuestionController extends Controller
         $question->topic_id = $request->topic_id;
         $question->save();
         flash('Ваш вопрос отправлен, после того как он пройдет обработку, он будет опубликован в разделe FAQ', 'success');
-        return redirect('faq');
+        return redirect()->back();
     }
 }

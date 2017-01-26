@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\EditQuestion;
 use Illuminate\Http\Request;
 use App\Question;
 
@@ -12,7 +13,7 @@ class TopicController extends Controller
      * 
      * @return [type] [description]
      */
-    public function show(Request $request, $id)
+    public function show($id)
     {
         $questions = Question::where('topic_id', '=', $id)->get();
         return view('topic', ['questions' => $questions]);
@@ -32,9 +33,19 @@ class TopicController extends Controller
      * 
      * @return [type] [description]
      */
-    public function edit(Request $request, $id)
+    public function edit(EditQuestion $request, $question_id)
     {
-        $question = Question::find($id);
+        $question = Question::find($question_id);
+        $question->text = $request->new_text;
+        if ($request->new_answer) {
+            $question->answer = $request->new_answer;
+        } else {
+            $question->answer = NULL;
+        }
+        $question->author_name = $request->new_author_name;
+        $question->save();
+        flash('Вопрос успешно изменен.', 'success');
+        return redirect()->back();
     }
 
     /**
@@ -42,8 +53,23 @@ class TopicController extends Controller
      * 
      * @return [type] [description]
      */
-    public function delete(Request $request, $id)
+    public function delete($question_id)
     {
-        $question = Question::find($id);
+        $question = Question::find($question_id);
+        $question->delete();
+        flash('Вопрос успешно удален.', 'success');
+        return redirect()->back();
+    }
+
+    public function hide($question_id)
+    {
+        $question = Question::find($question_id);
+        if ($question->status == 0) {
+            $question->status = 1;
+        } else {
+            $question->status = 0;
+        }
+        $question->save();
+        return redirect()->back();        
     }
 }

@@ -36,7 +36,7 @@ class AdminController extends Controller
         $admin->role = 'admin';        
         $admin->save();
         flash('Новый администратор успешно добавлен.', 'success');
-        return redirect('admins');
+        return redirect()->back();
     }
 
     /**
@@ -54,7 +54,7 @@ class AdminController extends Controller
             $admin->password = Hash::make($request['new_password']);
         }
         $admin->save();
-        return redirect('admins');
+        return redirect()->back();
     }
 
     /**
@@ -66,6 +66,6 @@ class AdminController extends Controller
     {
         $admin = Admin::find($id);
         $admin->delete();
-        return redirect('/admins');
+        return redirect()->back();
     }
 }

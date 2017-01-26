@@ -35,8 +35,9 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         Route::group(['prefix' => 'topic'], function () {
             Route::get('/{id}', 'TopicController@show');  
             Route::post('/{id}', 'TopicController@add');
-            Route::put('/{id}/{question_id}', 'TopicController@edit');
-            Route::delete('/{id}/{question_id}', 'TopicController@delete');
+            Route::put('/{question_id}', 'TopicController@edit');
+            Route::patch('/{question_id}', 'TopicController@hide');
+            Route::delete('/{question_id}', 'TopicController@delete');
         });
     });
 
