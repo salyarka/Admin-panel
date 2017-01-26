@@ -26,6 +26,8 @@ Route::get('/logout', 'AuthController@logout')->middleware('auth');
     
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
+    Route::get('/unanswered', 'TopicController@showUnAnswered');
+
     Route::group(['prefix' => 'faq'], function () {
         Route::get('/', 'FaqController@show');  
         Route::post('/', 'FaqController@add');
@@ -36,6 +38,7 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
             Route::get('/{id}', 'TopicController@show');  
             Route::post('/{id}', 'TopicController@add');
             Route::put('/{question_id}', 'TopicController@edit');
+            Route::put('/{question_id}/answer', 'TopicController@answer');            
             Route::patch('/{question_id}', 'TopicController@hide');
             Route::delete('/{question_id}', 'TopicController@delete');
         });

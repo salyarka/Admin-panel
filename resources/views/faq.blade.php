@@ -74,7 +74,7 @@
 			<ul id="basics" class="cd-faq-group">
 				<li class="cd-faq-title"><h2>{{ $topic->title }}</h2></li>	
 				@foreach ($topic->questions as $question)
-					@if ($question->status != 0)
+					@if ($question->status != 0 && $question->answer)
 						<li>
 							<a class="cd-faq-trigger" href="#0">{{ $question->text }}</a>
 							<div class="cd-faq-content">

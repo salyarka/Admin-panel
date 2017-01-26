@@ -26,7 +26,8 @@ class EditQuestion extends FormRequest
         $question_id = $this->route('question_id');
         return [
             'new_text' => 'required|unique:questions,text,' . $question_id,
-            'new_author_name' => 'required|max:50|alpha|'
+            'new_author_name' => 'required|max:50|alpha',
+            'new_topic' => 'required|exists:topics,id'
         ];
     }
 
@@ -42,7 +43,9 @@ class EditQuestion extends FormRequest
             'new_text.unique' => 'Такой вопрос цже существует.',
             'new_author_name.required' => 'У вопроса обязательно должен быть автор.',
             'new_author_name.max' => 'Слишком длинное имя.',
-            'new_author_name.alpha' => 'Имя автора может содержать только буквы.'
+            'new_author_name.alpha' => 'Имя автора может содержать только буквы.',
+            'new_topic.required' => 'Тема обязательна должна быть указана.',
+            'new_topic.exists' => 'Заданая Вами тема не существует.'
         ];
     }
 }

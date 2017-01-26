@@ -3,27 +3,16 @@
 @section('content')
 	<div class="card">
     <div class="header">
-      <h3>Вопросы</h3>
+      <h3>Тема {{ $topics->first()->title }}</h3>
     </div>
 	
-	{{-- SIDE CONTENT --}}
-		<div class="col-sm-3 sidenav">
-  		<div class="card">
-    		<div class="panel-heading">Добавление новой темы</div>
-      	<div class="panel-body">
-
-      	</div>
-    	</div>
-  	</div>
-
   	{{-- SHOW QUESTIONS --}}
-  	<div class="col-sm-9">
+  	<div>
       <table class="table text-left">
         <thead>
           <tr>
             <th>Текст</th>
             <th>Ответ</th>
-            <th>тема</th>
             <th>Статус</th>
             <th>Дата создания</th>
           </tr>
@@ -36,33 +25,72 @@
               	@if ($question->answer)
               		{{ $question->answer }}
               	@else
-              		У данного вопроса нет ответа.
+              		<button class="btn btn-primary" data-toggle="modal" data-target="#answer{{ $question->id }}">
+                    Ответить
+                  </button>
+                  <div class="modal fade" id="answer{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                    <div class="modal-dialog">
+                      <div class="modal-content">
+                        <div class="modal-header">
+                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                          <h4 class="modal-title" id="myModalLabel">Ответ</h4>
+                        </div>
+                        <div class="modal-body">
+                          <form action="{{ url('/admin/faq/topic/' . $question->id . '/answer') }}" method="POST">
+                            {{ csrf_field() }}
+                            {{ method_field('PUT') }}
+
+                            {{-- ANSWER --}}
+                            <div class="form-group">
+                              <input type="text" class="form-control" name="answer">
+                            </div>
+
+														<div class="checkbox">
+														  <label>
+														    <input type="checkbox" name="with_publication" value="1">
+														    	Добавить вопрос с публикацией
+														  </label>
+														</div>
+
+                            <button type="submit" class="btn btn-warning">Добавить и закрыть</button>
+                          </form>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
               	@endif
-              </td>
-              <td>
-              	тема
               </td>
               <td>
               	@if ($question->answer && $question->status == 1)
               		опубликован
-              		<form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
-                  {{ csrf_field() }}
-                  {{ method_field('PATCH') }}
-                  <button type="submit" class="btn btn-warning">скрыть</button>
-                	</form>
               	@elseif ($question->answer && $question->status == 0)
               		скрыт
-              		 <form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
-                  {{ csrf_field() }}
-                  {{ method_field('PATCH') }}
-                  <button type="submit" class="btn btn-success">восстановить</button>
-                  </form>
               	@elseif (!$question->answer)
               		ожидает ответ
               	@endif
-
               </td>
-              <td>{{ Carbon\Carbon::parse($question->created_at)->format('d-m-Y') }}</td>
+
+              {{-- DATE ADDED --}}
+              <td>
+              	{{ Carbon\Carbon::parse($question->created_at)->format('d-m-Y') }}
+              </td>
+
+              {{-- PUBLIC --}}
+              <td>
+              	@if ($question->answer && $question->status == 1)
+              		<form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
+                  	{{ csrf_field() }}
+                  	{{ method_field('PATCH') }}
+                  	<button type="submit" class="btn btn-warning">скрыть</button>
+              		</form>
+              	@elseif ($question->answer && $question->status == 0)
+              		<form action="{{ url('/admin/faq/topic/' . $question->id) }}" method="POST">
+                  	{{ csrf_field() }}
+                  	{{ method_field('PATCH') }}
+                  	<button type="submit" class="btn btn-success">опубликовать</button>
+                  </form>
+              	@endif
+              </td>
 
               {{-- EDIT --}}
               <td>
@@ -91,6 +119,16 @@
                             <div class="form-group">
                               <label for="new_title">Ответ</label>
                               <input type="text" class="form-control" name="new_answer" value="{{ $question->answer }}">
+                            </div>
+
+                            {{-- TOPIC --}}
+                            <div class="form-group">
+                              <label for="new_topic">Выберете тему:</label>
+      												<select class="form-control" id="new_topic" name="new_topic">
+      													@foreach ($topics as $topic)
+      												  	<option value="{{ $topic->id }}">{{ $topic->title }}</option>
+      												  @endforeach
+      												</select>
                             </div>
 
                             {{-- NEW AUTHOR --}}

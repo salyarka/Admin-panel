@@ -2,9 +2,12 @@
 
 namespace App\Http\Controllers;
 
+use App\Http\Requests\AnswerQuestion;
 use App\Http\Requests\EditQuestion;
 use Illuminate\Http\Request;
 use App\Question;
+use App\Topic;
+
 
 class TopicController extends Controller
 {
@@ -16,7 +19,8 @@ class TopicController extends Controller
     public function show($id)
     {
         $questions = Question::where('topic_id', '=', $id)->get();
-        return view('topic', ['questions' => $questions]);
+        $topics = Topic::all();
+        return view('topic', ['questions' => $questions, 'topics' => $topics]);
     }
 
     /**
@@ -42,6 +46,7 @@ class TopicController extends Controller
         } else {
             $question->answer = NULL;
         }
+        $question->topic_id = $request->new_topic;
         $question->author_name = $request->new_author_name;
         $question->save();
         flash('Вопрос успешно изменен.', 'success');
@@ -61,6 +66,12 @@ class TopicController extends Controller
         return redirect()->back();
     }
 
+    /**
+     * [hide description]
+     * 
+     * @param  [type] $question_id [description]
+     * @return [type]              [description]
+     */
     public function hide($question_id)
     {
         $question = Question::find($question_id);
@@ -71,5 +82,36 @@ class TopicController extends Controller
         }
         $question->save();
         return redirect()->back();        
+    }
+
+    /**
+     * [answer description]
+     * 
+     * @param  [type] $question_id [description]
+     * @return [type]              [description]
+     */
+    public function answer(AnswerQuestion $request, $question_id)
+    {
+        $question = Question::find($question_id);
+        if (!$question->answer) {
+            $question->answer = $request->answer;
+            if ($request->with_publication == 1) {
+                $question->status = 1;
+            }
+            $question->save();
+            return redirect()->back();
+        }
+    }
+
+    /**
+     * [showUnAnswered description]
+     * 
+     * @return [type] [description]
+     */
+    public function showUnAnswered()
+    {
+        $questions = Question::whereNull('answer')->orderBy('id')->get();
+        $topics = Topic::all();
+        return view('unanswered_questions', ['questions' => $questions, 'topics' => $topics]);
     }
 }
