@@ -44,8 +44,6 @@ Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
         });
     });
 
-
-
     Route::group(['middleware' => 'role:superAdmin'], function () {
         Route::get('/', 'AdminController@show');
         Route::post('/', 'AdminController@add');

@@ -18,7 +18,7 @@ class AdminController extends Controller
     public function show()
     {
         $admins = Admin::all();
-        return view('admin_panel/admins', ['admins' => $admins]);
+        return view('dashboard.admins', ['admins' => $admins]);
     }
 
     /**

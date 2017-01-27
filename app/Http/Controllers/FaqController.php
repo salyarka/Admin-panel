@@ -30,7 +30,7 @@ class FaqController extends Controller
     {
         // dd($request->route()->getPrefix());
         $topics = Topic::all();
-        $view = $this->isAdminRequest($request) ? 'admin_panel.faq' : 'faq';
+        $view = $this->isAdminRequest($request) ? 'dashboard.faq' : 'faq';
         return view($view, ['topics' => $topics]);
     }
 

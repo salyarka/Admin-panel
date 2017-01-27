@@ -20,7 +20,7 @@ class TopicController extends Controller
     {
         $questions = Question::where('topic_id', '=', $id)->get();
         $topics = Topic::all();
-        return view('topic', ['questions' => $questions, 'topics' => $topics]);
+        return view('dashboard.topic', ['questions' => $questions, 'topics' => $topics]);
     }
 
     /**
@@ -112,6 +112,6 @@ class TopicController extends Controller
     {
         $questions = Question::whereNull('answer')->orderBy('id')->get();
         $topics = Topic::all();
-        return view('unanswered_questions', ['questions' => $questions, 'topics' => $topics]);
+        return view('dashboard.unanswered_questions', ['questions' => $questions, 'topics' => $topics]);
     }
 }

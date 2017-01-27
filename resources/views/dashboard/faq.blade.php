@@ -1,5 +1,7 @@
 @extends('layouts.admin_panel')
 
+@section('title', 'темами')
+
 @section('content')
   <div class="card">
     <div class="header">
@@ -74,7 +76,7 @@
                       <div class="modal-content">
                         <div class="modal-header">
                           <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                          <h4 class="modal-title" id="myModalLabel">Тема</h4>
+                          <h4 class="modal-title" id="myModalLabel">Изменение темы {{ $topic->title }}</h4>
                         </div>
                         <div class="modal-body">
                           <form action="{{ url('/admin/faq/' . $topic->id) }}" method="POST">
