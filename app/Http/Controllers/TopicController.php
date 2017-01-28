@@ -7,10 +7,19 @@ use App\Http\Requests\EditQuestion;
 use Illuminate\Http\Request;
 use App\Question;
 use App\Topic;
+use App\Log\Log;
 
 
 class TopicController extends Controller
 {
+    private $myLog;
+
+    public function __construct(Log $log)
+    {
+        $this->myLog = $log;
+    }
+
+
     /**
      * [show description]
      * 
@@ -49,6 +58,7 @@ class TopicController extends Controller
         $question->topic_id = $request->new_topic;
         $question->author_name = $request->new_author_name;
         $question->save();
+        $this->myLog->write();
         flash('Вопрос успешно изменен.', 'success');
         return redirect()->back();
     }
