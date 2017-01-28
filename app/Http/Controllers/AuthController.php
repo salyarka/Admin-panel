@@ -22,9 +22,9 @@ class AuthController extends Controller
         ];
         if (Auth::attempt($adminData)) {
             return redirect('admin');
-        } else {
-            return ('lalala');
         }
+        flash('Логин или пароль введены не верно.', 'warning');
+        return view('login');
     }
 
     /**

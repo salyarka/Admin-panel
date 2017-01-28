@@ -2,6 +2,10 @@
 
 @section('title', 'вопросами')
 
+@section('navbar')
+  @include('dashboard.components.navbar')
+@endsection
+
 @section('content')
 @if (count($questions) > 0)
 	<div class="card">

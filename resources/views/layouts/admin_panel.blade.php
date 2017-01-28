@@ -9,27 +9,12 @@
   <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
 </head>
 <body>
-  <nav class="navbar navbar-inverse">
-    <div class="container-fluid">
-      <div class="collapse navbar-collapse" id="myNavbar">
-        <ul class="nav navbar-nav">
-          @if (Auth::user()->role == 'superAdmin')
-            <li><a href="{{ url('/admin')}}">Админы</a></li>
-          @endif
-          <li><a href="{{ url('/admin/faq')}}">Темы</a></li>
-          <li><a href="{{ url('/admin/unanswered')}}">Вопросы без ответов</a></li>          
-        </ul>
-        
-        <ul class="nav navbar-nav navbar-right">
-          <li><a href="{{ url('/logout')}}"><span class="glyphicon glyphicon-log-in"></span> Выход</a></li>
-        </ul>
-      </div>
-    </div>
-  </nav>
+
+  @yield('navbar')
+
   <div class="container-fluid text-center">
     {{-- ERRORS --}}
     @if (count($errors) > 0)
-      <div class="alert alert-danger">
         <ul>
           @foreach ($errors->all() as $error)
             <div class="alert alert-warning">
@@ -38,15 +23,17 @@
             </div>
           @endforeach
         </ul>
-      </div>
     @endif
+
     {{-- FLASH MESSAGES --}}
+    <div style="height: 60px">
     @if (session()->has('flash_notification.message'))
       <div class="alert alert-{{ session('flash_notification.level') }}">
         <button type="button" class="close" data-dismiss="alert" aria-hidden="true">&times;</button>
         {{ session('flash_notification.message') }}
       </div>
     @endif
+    </div>
     @yield('content')
   </div>
 </body>

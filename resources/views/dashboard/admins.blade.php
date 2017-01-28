@@ -2,6 +2,10 @@
 
 @section('title', 'администраторами')
 
+@section('navbar')
+  @include('dashboard.components.navbar')
+@endsection
+
 @section('content')
   <div class="card">
     <div class="header">

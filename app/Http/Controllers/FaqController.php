@@ -44,6 +44,7 @@ class FaqController extends Controller
         $topic = new Topic();
         $topic->title = $request->title;
         $topic->save();
+        flash('Тема успешно добавлена.', 'success');
         return redirect()->back();
     }
 
