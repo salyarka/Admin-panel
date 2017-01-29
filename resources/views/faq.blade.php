@@ -1,4 +1,4 @@
-@extends('layouts.admin_panel')
+@extends('layouts.app')
 
 @section('title', 'FAQ')
 
@@ -40,10 +40,10 @@
 		</div>
 
 		<div class="col-md-3">
-			<button class="btn btn-info btn-fixed" data-toggle="modal" data-spy="affix">
+			<button class="btn btn-info btn-fixed" data-toggle="modal" data-spy="affix" data-target="#question">
     		Задать вопрос
   		</button>
-  		<div class="modal fade" id="{{ $question->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  		<div class="modal fade" id="question" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
     		<div class="modal-dialog">
     		  <div class="modal-content">
     		    <div class="modal-header">

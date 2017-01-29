@@ -20,7 +20,8 @@ class Question extends Model
      * @var array
      */
     protected $fillable = [
-        'status', 'author_name', 'text', 'answer', 'topic_id'
+        'status', 'author_name', 'text', 
+        'answer', 'topic_id', 'alert_words'
     ];
 
     /**

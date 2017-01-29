@@ -27,6 +27,7 @@ Route::get('/logout', 'AuthController@logout')->middleware('auth');
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
     Route::get('/unanswered', 'TopicController@showUnAnswered');
+    Route::get('/blocked', 'TopicController@blocked');
 
     Route::group(['prefix' => 'faq'], function () {
         Route::get('/', 'FaqController@show');  

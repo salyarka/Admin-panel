@@ -1,4 +1,4 @@
-@extends('layouts.admin_panel')
+@extends('layouts.app')
 
 @section('title', 'темой')
 
@@ -9,9 +9,10 @@
 @section('content')
 	<div class="card">
     <div class="header">
-      <h3>Тема {{ $topics->first()->title }}</h3>
+      {{-- <h3>Тема {{ $topics->find($id)->title }}</h3> --}}
+      <h3>Тема {{ $topic->title }}</h3>      
     </div>
-	  @if (count($questions) > 0)
+	  @if (count($topic->questions) > 0)
   	{{-- SHOW QUESTIONS --}}
   	<div>
       <table class="table text-left">
@@ -23,7 +24,7 @@
           </tr>
         </thead>
         <tbody>
-          @foreach ($questions as $question)
+          @foreach ($topic->questions as $question)
             <tr>
               @include('dashboard.components.text_and_date')
 

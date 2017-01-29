@@ -28,7 +28,7 @@ class AddAdmin extends FormRequest
             'surname' => 'required|max:25',
             'name' => 'required|max:25',
             'password' => 'required|min:6|confirmed',
-            'password_confirmation' => 'required|min:6'
+            'password_confirmation' => 'required'
         ];
     }
 
@@ -50,8 +50,7 @@ class AddAdmin extends FormRequest
             'password.confirmed' => 'Пароль не совпадает с подтверждением.',
             'password.required' => 'Пароль обязателен для заполнения.',
             'password.min' => 'Пароль должен содержать минимум 6 символов.',
-            'password_confirmation.required' => 'Подтверждение обязательно для заполнения.',
-            'password_confirmation.min' => 'Пароль не совпадает с подтверждением.'
+            'password_confirmation.required' => 'Подтверждение обязательно для заполнения.'
         ];
     }
 }

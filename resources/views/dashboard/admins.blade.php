@@ -1,4 +1,4 @@
-@extends('layouts.admin_panel')
+@extends('layouts.app')
 
 @section('title', 'администраторами')
 
@@ -21,54 +21,36 @@
               {{ csrf_field() }}
 
               {{-- LOGIN  --}}
-              <div class="form-group{{ $errors->has('login') ? ' has-error' : '' }}">
+              <div class="form-group">
                 <label for="login" class="col-md-4 control-label">Логин</label>
                 <div class="col-md-6">
                   <input id="login" type="text" class="form-control" name="login" value="{{ old('login') }}" required autofocus>
-                  @if ($errors->has('login'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('login') }}</strong>
-                    </span>
-                  @endif
                 </div>
               </div>
 
               {{-- SURNAME --}}
-              <div class="form-group{{ $errors->has('surname') ? ' has-error' : '' }}">
+              <div class="form-group">
                 <label for="surname" class="col-md-4 control-label">Фамилия</label>
                 <div class="col-md-6">
                   <input id="surname" type="text" class="form-control" name="surname" value="{{ old('surname') }}" required autofocus>
                   @if ($errors->has('surname'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('surname') }}</strong>
-                    </span>
                   @endif
                 </div>
               </div>
 
               {{-- NAME --}}
-              <div class="form-group{{ $errors->has('name') ? ' has-error' : '' }}">
+              <div class="form-group">
                 <label for="name" class="col-md-4 control-label">Имя</label>
                 <div class="col-md-6">
                   <input id="name" type="text" class="form-control" name="name" value="{{ old('name') }}" required autofocus>
-                  @if ($errors->has('name'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('name') }}</strong>
-                    </span>
-                  @endif
                 </div>
               </div>
 
               {{-- PASSWORD --}}
-              <div class="form-group{{ $errors->has('password') ? ' has-error' : '' }}">
+              <div class="form-group">
                 <label for="password" class="col-md-4 control-label">Пароль</label>
                 <div class="col-md-6">
                   <input id="password" type="password" class="form-control" name="password" required>
-                  @if ($errors->has('password'))
-                    <span class="help-block">
-                      <strong>{{ $errors->first('password') }}</strong>
-                    </span>
-                  @endif
                 </div>
               </div>
 

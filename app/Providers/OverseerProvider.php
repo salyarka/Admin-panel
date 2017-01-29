@@ -3,9 +3,9 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Services\Log;
+use App\Services\Overseer;
 
-class LogProvider extends ServiceProvider
+class OverseerProvider extends ServiceProvider
 {
     /**
      * Bootstrap the application services.
@@ -24,7 +24,7 @@ class LogProvider extends ServiceProvider
      */
     public function register()
     {
-        $this->app->bind(Log::class, function(){
-        return new Log();
+        this->app->bind(Overseer::class, function(){
+            return new Overseer();
     }
 }

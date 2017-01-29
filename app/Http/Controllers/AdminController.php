@@ -7,9 +7,17 @@ use App\Http\Requests\AddAdmin;
 use App\Http\Requests\EditAdmin;
 use Illuminate\Http\Request;
 use App\Admin;
+use App\Services\Log;
 
 class AdminController extends Controller
 {
+    private $myLog;
+
+    public function __construct(Log $log)
+    {
+        $this->myLog = $log;
+    }
+
     /**
      * Show main admin panel.
      * 
@@ -36,6 +44,7 @@ class AdminController extends Controller
         $admin->role = 'admin';        
         $admin->save();
         flash('Новый администратор успешно добавлен.', 'success');
+        $this->myLog->write('добавил администратора "' . $admin->login . '" (' . $admin->id . ')');        
         return redirect()->back();
     }
 
@@ -46,7 +55,7 @@ class AdminController extends Controller
      */
     public function edit(EditAdmin $request, $id)
     {
-        $admin = Admin::find($id);
+        $admin = Admin::findOrFail($id);
         $admin->login = $request->new_login;
         $admin->surname = $request->new_surname;
         $admin->name = $request->new_name;
@@ -54,6 +63,7 @@ class AdminController extends Controller
             $admin->password = Hash::make($request['new_password']);
         }
         $admin->save();
+        $this->myLog->write('изменил данные администратора "' . $admin->login . '" (' . $admin->id . ')');
         return redirect()->back();
     }
 
@@ -66,6 +76,7 @@ class AdminController extends Controller
     {
         $admin = Admin::find($id);
         $admin->delete();
+        $this->myLog->write('удалил администратора "' . $admin->login . '" (' . $admin->id . ')');
         return redirect()->back();
     }
 }

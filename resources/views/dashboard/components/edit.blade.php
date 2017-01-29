@@ -15,7 +15,6 @@
 
             <div class="form-group">
               <label for="new_text">Вопрос</label>
-              {{-- <input type="text" class="form-control" name="new_text" value="{{ $question->text }}"> --}}
               <textarea class="form-control" rows="3" name="new_text">{{ $question->text }}</textarea>
             </div>
 
