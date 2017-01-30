@@ -1,12 +1,2 @@
-/node_modules
-/public/storage
-/storage/
 /vendor
-/.idea
-/public
-Homestead.json
-Homestead.yaml
-.env
-readme.md
-.env.example
 .gitattributes

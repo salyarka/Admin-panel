@@ -35,16 +35,6 @@ class Question extends Model
     }
 
     /**
-     * Define relationship.
-     * 
-     * @return Illuminate\Database\Eloquent\Relations\belongsToMany
-     */
-    public function forbiddens()
-    {
-        return $this->belongsToMany('App\Forbidden');
-    }
-
-    /**
      * Make associative array with forbidden words as keys.
      * 
      * @return array
