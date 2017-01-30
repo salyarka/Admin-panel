@@ -9,10 +9,10 @@ use App\Http\Requests\LoginAdmin;
 class AuthController extends Controller
 {
     /**
-     * [login description]
+     * Authentication for admins.
      * 
-     * @param  LoginAdmin $request [description]
-     * @return [type]              [description]
+     * @param  LoginAdmin $request
+     * @return Response
      */
     public function login(LoginAdmin $request)
     {
@@ -28,9 +28,9 @@ class AuthController extends Controller
     }
 
     /**
-     * [logout description]
+     * Logout for admins.
      * 
-     * @return [type] [description]
+     * @return Response
      */
     public function logout()
     {

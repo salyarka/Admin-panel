@@ -25,11 +25,11 @@
 
             <div class="form-group">
               <label for="new_topic">Выберете тему:</label>
-      				<select class="form-control" id="new_topic" name="new_topic">
-      					@foreach ($topics as $topic)
-      				  	<option value="{{ $topic->id }}">{{ $topic->title }}</option>
-      				  @endforeach
-      				</select>
+              <select class="form-control" id="new_topic" name="new_topic">
+                @foreach ($topics as $topic)
+                  <option value="{{ $topic->id }}">{{ $topic->title }}</option>
+                @endforeach
+              </select>
             </div>
 
             <div class="form-group">

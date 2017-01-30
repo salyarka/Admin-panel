@@ -35,19 +35,12 @@ class Admin extends Authenticatable
         'password'
     ];
 
-    // public function getRememberToken()
-    // {
-    //     return null; // not supported
-    // }
-
+    /**
+     * Disable remember token option.
+     */
     public function setRememberToken($value)
     {
         return null;
     }
-
-    // public function getRememberTokenName()
-    // {
-    //     return null; // not supported
-    // }
 
 }

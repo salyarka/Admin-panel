@@ -8,10 +8,7 @@
 
 @section('content')
   <div class="card">
-    <div class="header">
-      <h3>Администраторы</h3>
-    </div>
-
+  
     {{-- ADD ADMIN --}}
     <div class="col-sm-3 sidenav">
       <div class="card">
@@ -79,111 +76,116 @@
 
     {{-- SHOW ADMINS --}}
     <div class="col-sm-9">
-      <table class="table text-left">
-        <thead>
-          <tr>
-            <th>Логин</th>
-            <th>Фамилия</th>
-            <th>Имя</th>
-          </tr>
-        </thead>
-        <tbody>
-          @foreach ($admins as $admin)
-            @if ($admin->role == 'admin')
-              <tr>
-                <td>{{ $admin->login }}</td>
-                <td>{{ $admin->surname }}</td>
-                <td>{{ $admin->name }}</td>
+      @if (count($admins) > 1)
+        <div class="header">
+          <h3>Администраторы</h3>
+        </div> 
+        <table class="table text-left">
+          <thead>
+            <tr>
+              <th>Логин</th>
+              <th>Фамилия</th>
+              <th>Имя</th>
+            </tr>
+          </thead>
+          <tbody>
+            @foreach ($admins as $admin)
+              @if ($admin->role == 'admin')
+                <tr>
+                  <td>{{ $admin->login }}</td>
+                  <td>{{ $admin->surname }}</td>
+                  <td>{{ $admin->name }}</td>
 
-                {{-- EDIT --}}
-                <td>
-                  <button class="btn btn-info" data-toggle="modal" data-target="#{{ $admin->id }}">
-                    Изменить
-                  </button>
-                  <div class="modal fade" id="{{ $admin->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                          <h4 class="modal-title" id="myModalLabel">Админ</h4>
-                        </div>
-                        <div class="modal-body">
-                          <form action="{{ url('/admin/' . $admin->id) }}" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('PUT') }}
+                  {{-- EDIT --}}
+                  <td>
+                    <button class="btn btn-info" data-toggle="modal" data-target="#{{ $admin->id }}">
+                      Изменить
+                    </button>
+                    <div class="modal fade" id="{{ $admin->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Админ</h4>
+                          </div>
+                          <div class="modal-body">
+                            <form action="{{ url('/admin/' . $admin->id) }}" method="POST">
+                              {{ csrf_field() }}
+                              {{ method_field('PUT') }}
 
-                            {{-- LOGIN --}}
-                            <div class="form-group">
-                              <label for="new_login">Логин</label>
-                              <input type="text" class="form-control" name="new_login" value="{{ $admin->login }}">
-                            </div>
+                              {{-- LOGIN --}}
+                              <div class="form-group">
+                                <label for="new_login">Логин</label>
+                                <input type="text" class="form-control" name="new_login" value="{{ $admin->login }}">
+                              </div>
 
-                            {{-- NAME --}}
-                            <div class="form-group">
-                              <label for="new_name">Имя</label>
-                              <input type="text" class="form-control" name="new_name" value="{{ $admin->name }}">
-                            </div>
+                              {{-- NAME --}}
+                              <div class="form-group">
+                                <label for="new_name">Имя</label>
+                                <input type="text" class="form-control" name="new_name" value="{{ $admin->name }}">
+                              </div>
 
-                            {{-- SURNAME --}}
-                            <div class="form-group">
-                              <label for="new_surname">Фамилия</label>
-                              <input type="text" class="form-control" name="new_surname" value="{{ $admin->surname }}">
-                            </div>
+                              {{-- SURNAME --}}
+                              <div class="form-group">
+                                <label for="new_surname">Фамилия</label>
+                                <input type="text" class="form-control" name="new_surname" value="{{ $admin->surname }}">
+                              </div>
 
-                            {{-- NEW PASSWORD --}}
-                            <div>
-                              <label for="new_password">Новый пароль</label>
-                              <input type="password" class="form-control" name="new_password">
-                            </div>
-                            <br>
+                              {{-- NEW PASSWORD --}}
+                              <div class="form-group">
+                                <label for="new_password">Новый пароль</label>
+                                <input type="password" class="form-control" name="new_password">
+                              </div>
 
-                            {{-- CONFIRM --}}
-                            <div>
-                              <label for="new_password_confirm">Подтверждение</label>
-                              <input type="password" class="form-control" name="new_password_confirmation">
-                            </div> 
+                              {{-- CONFIRM --}}
+                              <div class="form-group">
+                                <label for="new_password_confirm">Подтверждение</label>
+                                <input type="password" class="form-control" name="new_password_confirmation">
+                              </div> 
 
-                            <br>  
-                            <button type="submit" class="btn btn-warning">Изменить и закрыть</button>
-                          </form>
-                        </div>
-                      </div>
-                    </div>
-                  </div>
-                </td> {{-- EDIT --}}
-
-                {{-- DELETE --}}
-                <td>
-                  <button class="btn btn-danger" data-toggle="modal" data-target="#del{{ $admin->id }}">
-                    Удалить
-                  </button>
-                  <div class="modal fade" id="del{{ $admin->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                    <div class="modal-dialog">
-                      <div class="modal-content">
-                        <div class="modal-header">
-                          <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                          <h4 class="modal-title" id="myModalLabel">Подтверждение удаления</h4>
-                        </div>
-                        <div class="modal-body">
-                          <form action="{{ url('/admin/' . $admin->id) }}" method="POST">
-                            {{ csrf_field() }}
-                            {{ method_field('DELETE') }}
-                            <div class="form-group">
-                              <h5>Вы точно хотите удалить админстратора {{ $admin->login }} ?</h5>
-                            </div>
-                            <button type="submit" class="btn btn-danger">Удалить</button>
-                          </form>
+                              <button type="submit" class="btn btn-warning">Изменить и закрыть</button>
+                            </form>
+                          </div>
                         </div>
                       </div>
                     </div>
-                  </div>
-                </td> {{-- DELETE --}}
+                  </td> {{-- EDIT --}}
 
-              </tr> 
-            @endif
-          @endforeach
-        </tbody>
-      </table>
+                  {{-- DELETE --}}
+                  <td>
+                    <button class="btn btn-danger" data-toggle="modal" data-target="#del{{ $admin->id }}">
+                      Удалить
+                    </button>
+                    <div class="modal fade" id="del{{ $admin->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+                      <div class="modal-dialog">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                            <h4 class="modal-title" id="myModalLabel">Подтверждение удаления</h4>
+                          </div>
+                          <div class="modal-body">
+                            <form action="{{ url('/admin/' . $admin->id) }}" method="POST">
+                              {{ csrf_field() }}
+                              {{ method_field('DELETE') }}
+                              <div class="form-group">
+                                <h5>Вы точно хотите удалить админстратора {{ $admin->login }} ?</h5>
+                              </div>
+                              <button type="submit" class="btn btn-danger">Удалить</button>
+                            </form>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </td> {{-- DELETE --}}
+
+                </tr> 
+              @endif
+            @endforeach
+          </tbody>
+        </table>
+      @else
+        <h3>Пока что нет администраторов</h3>  
+      @endif
     </div> {{-- SHOW ADMINS --}}
   </div>
 @endsection

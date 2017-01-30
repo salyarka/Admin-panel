@@ -17,12 +17,12 @@
             <input type="text" class="form-control" name="answer">
           </div>
 
-					<div class="checkbox">
-					  <label>
-					    <input type="checkbox" name="with_publication" value="1">
-					    	Добавить вопрос с публикацией
-					  </label>
-					</div>
+          <div class="checkbox">
+            <label>
+              <input type="checkbox" name="with_publication" value="1">
+                Добавить вопрос с публикацией
+            </label>
+          </div>
 
           <button type="submit" class="btn btn-warning">Добавить и закрыть</button>
         </form>

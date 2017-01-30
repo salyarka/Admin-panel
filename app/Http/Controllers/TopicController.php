@@ -3,30 +3,40 @@
 namespace App\Http\Controllers;
 
 use App\Http\Requests\AnswerQuestion;
+use App\Http\Requests\StoreQuestion;
 use App\Http\Requests\EditQuestion;
-use Illuminate\Http\Request;
 use App\Question;
 use App\Topic;
+use App\Forbidden;
 use App\Services\Log;
-use App\Services\Overseer;
 
 
 class TopicController extends Controller
 {
+    /**
+     * Log instance.
+     * 
+     * @var Log
+     */    
     private $myLog;
-    private $myOverseer;
 
-    public function __construct(Log $log, Overseer $overseer)
+    /**
+     * Create a new controller instance.
+     * 
+     * @param Log $log
+     * @return  void
+     */
+    public function __construct(Log $log)
     {
         $this->myLog = $log;
-        $this->myOverseer = $overseer;
     }
 
 
     /**
-     * [show description]
-     * 
-     * @return [type] [description]
+     * Show questions in topic.
+     *
+     * @param  string   $id  topics id
+     * @return Response
      */
     public function show($id)
     {
@@ -36,24 +46,39 @@ class TopicController extends Controller
     }
 
     /**
-     * 
-     * @return [type] [description]
+     * Add new question from user.
+     *
+     * @param  StoreQuestion $request 
+     * @return Response
      */
-    public function add()
+    public function add(StoreQuestion $request)
     {
-
+        $question = new Question();
+        $question->text = $request->text;
+        $question->check();
+        $question->author_name = $request->author_name;
+        $question->topic_id = $request->topic_id;
+        $question->save();
+        flash(
+            'Ваш вопрос отправлен,
+            после того как он пройдет обработку,
+            он будет опубликован в разделe FAQ', 'success'
+        );
+        return redirect()->back();        
     }
 
     /**
-     * [edit description]
-     * 
-     * @return [type] [description]
+     * Edit question.
+     *
+     * @param  EditQuestion $request 
+     * @param  string       $question_id   
+     * @return Response
      */
     public function edit(EditQuestion $request, $question_id)
     {
         $question = Question::findOrFail($question_id);
         $question->text = $request->new_text;
-        $this->myOverseer->check($question);
+        $question->check();
         if ($request->new_answer) {
             $question->answer = $request->new_answer;
         } else {
@@ -63,49 +88,75 @@ class TopicController extends Controller
         $question->author_name = $request->new_author_name;
         $question->save();
         flash('Вопрос успешно изменен.', 'success');
-        $this->myLog->write('обновил вопрос (' . $question->id . ') из темы "' . $question->topic->title . '" (' . $question->topic->id . ')');
+        $this->myLog->write(
+            'обновил вопрос (' .
+            $question->id .
+            ') из темы "' .
+            $question->topic->title .
+            '" (' . $question->topic->id . ')'
+        );
         return redirect()->back();
     }
 
     /**
-     * [delete description]
-     * 
-     * @return [type] [description]
+     * Delete question.
+     *
+     * @param  string       $question_id 
+     * @return Response
      */
     public function delete($question_id)
     {
         $question = Question::findOrFail($question_id);
         $question->delete();
         flash('Вопрос успешно удален.', 'success');
-        $this->myLog->write('удалил вопрос (' . $question->id . ') из темы "' . $question->topic->title . '" (' . $question->topic->id . ')');
+        $this->myLog->write(
+            'удалил вопрос (' .
+            $question->id .
+            ') из темы "' .
+            $question->topic->title .
+            '" (' . $question->topic->id . ')'
+        );
         return redirect()->back();
     }
 
     /**
-     * [hide description]
+     * Hide question.
      * 
-     * @param  [type] $question_id [description]
-     * @return [type]              [description]
+     * @param  string   $question_id 
+     * @return Response
      */
     public function hide($question_id)
     {
         $question = Question::findOrFail($question_id);
         if ($question->status == 0) {
             $question->status = 1;
-            $this->myLog->write('сделал вопрос (' . $question->id . ') открытым из темы "' . $question->topic->title . '" (' . $question->topic->id . ')');
+            $this->myLog->write(
+                'сделал вопрос (' .
+                $question->id .
+                ') открытым из темы "' .
+                $question->topic->title .
+                '" (' . $question->topic->id . ')'
+            );
         } else {
             $question->status = 0;
-            $this->myLog->write('скрыл вопрос (' . $question->id . ') из темы "' . $question->topic->title . '" (' . $question->topic->id . ')');
+            $this->myLog->write(
+                'скрыл вопрос (' .
+                $question->id .
+                ') из темы "' .
+                $question->topic->title .
+                '" (' . $question->topic->id . ')'
+            );
         }
         $question->save();
         return redirect()->back();        
     }
 
     /**
-     * [answer description]
+     * Answer question.
      * 
-     * @param  [type] $question_id [description]
-     * @return [type]              [description]
+     * @param  AnswerQuestion $request
+     * @param  string         $question_id
+     * @return Response
      */
     public function answer(AnswerQuestion $request, $question_id)
     {
@@ -114,10 +165,24 @@ class TopicController extends Controller
             $question->answer = $request->answer;
             if ($request->with_publication == 1) {
                 $question->status = 1;
-            $this->myLog->write('ответил на вопрос (' . $question->id . ') из темы "' . $question->topic->title . '" (' . $question->topic->id . ') с публикацией');
+            $this->myLog->write(
+                'ответил на вопрос (' .
+                $question->id .
+                ') из темы "' .
+                $question->topic->title .
+                '" (' . $question->topic->id .
+                ') с публикацией'
+            );
 
             } else{
-                $this->myLog->write('ответил на вопрос (' . $question->id . ') из темы "' . $question->topic->title . '" (' . $question->topic->id . ') с скрытием');
+                $this->myLog->write(
+                    'ответил на вопрос (' .
+                    $question->id .
+                    ') из темы "' .
+                    $question->topic->title .
+                    '" (' . $question->topic->id .
+                    ') с скрытием'
+                );
             }
             $question->save();
             return redirect()->back();
@@ -125,27 +190,37 @@ class TopicController extends Controller
     }
 
     /**
-     * [showUnAnswered description]
+     * Shows unanswered questions.
      * 
-     * @return [type] [description]
+     * @return Response
      */
     public function showUnAnswered()
     {
         $questions = Question::whereNull('answer')->orderBy('id')->get();
         $topics = Topic::all();
-        return view('dashboard.unanswered_questions', ['questions' => $questions, 'topics' => $topics]);
+        return view(
+            'dashboard.unanswered_questions',
+            ['questions' => $questions, 'topics' => $topics]
+        );
     }
 
     /**
-     * [blocked description]
+     * Shows blockes questions.
      * 
-     * @return [type] [description]
+     * @return Response
      */
-    public function blocked()
+    public function showBlocked()
     {
-        $questions = Question::whereNotNull('alert_words')->get();
+        $questions = Question::where('status', 2)->get();
         $topics = Topic::all();
-        return view('dashboard.blocked_questions', ['questions' => $questions, 'topics' => $topics]);
+        $forbiddens = Forbidden::all();
+        return view(
+            'dashboard.blocked_questions',
+            [
+                'questions' => $questions,
+                'topics' => $topics,
+                'forbiddens' => $forbiddens
+            ]
+        );
     }
-
 }

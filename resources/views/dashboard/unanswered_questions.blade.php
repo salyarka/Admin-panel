@@ -8,11 +8,11 @@
 
 @section('content')
 @if (count($questions) > 0)
-	<div class="card">
+  <div class="card">
     <div class="header">
       <h3>Вопросы без ответов</h3>
     </div>
-  	<div>
+    <div>
       <table class="table text-left">
         <thead>
           <tr>

@@ -38,7 +38,7 @@ class LoginAdmin extends FormRequest
     {
         return [
             'login.required' => 'Логин обязателен для заполнения.',
-            'password.required' => 'Пароль обязателен для заполнения.',
+            'password.required' => 'Пароль обязателен для заполнения.'
         ];
     }
 }

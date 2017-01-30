@@ -14,30 +14,32 @@ class QuestionTableSeeder extends Seeder
         DB::table('questions')->insert([
             [
                 'topic_id' => '1',
-                'status' => '0',
-                'author_name' => 'salyarka',
-                'text' => 'testoviy vopros',
-                'answer' => 'tesoviy otvet 1'
+                'status' => '1',
+                'author_name' => 'author',
+                'text' => 'Lorem ipsum dolor sit amet',
+                'answer' => 'consectetur adipisicing elit,
+                             sed do eiusmod tempor incididunt
+                             ut labore et dolore magna aliqua'
             ],
             [
                 'topic_id' => '1',
                 'status' => '0',
-                'author_name' => 'salyarka',
-                'text' => 'testoviy vopros 2',
+                'author_name' => 'author',
+                'text' => 'Ut enim ad minim veniam',
                 'answer' => NULL
             ],
             [
-                'topic_id' => '1',
-                'status' => '0',
-                'author_name' => 'salyarka',
-                'text' => 'testoviy vopros 3',
-                'answer' => 'testoviy otvet 2'
+                'topic_id' => '2',
+                'status' => '1',
+                'author_name' => 'author',
+                'text' => 'Quis nostrud exercitation ullamco',
+                'answer' => 'Laboris nisi ut aliquip ex ea commod'
             ],
             [
-                'topic_id' => '1',
+                'topic_id' => '2',
                 'status' => '0',
-                'author_name' => 'salyarka',
-                'text' => 'testoviy vopros 4',
+                'author_name' => 'author',
+                'text' => 'Duis aute irure dolor in reprehenderit',
                 'answer' => NULL
             ],
         ]);

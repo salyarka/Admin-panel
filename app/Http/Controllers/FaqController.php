@@ -11,16 +11,29 @@ use App\Services\Log;
 
 class FaqController extends Controller
 {
+    /**
+     * Log instance.
+     * 
+     * @var Log
+     */    
     private $myLog;
 
+    /**
+     * Create a new controller instance.
+     * 
+     * @param Log $log
+     * @return  void
+     */
     public function __construct(Log $log)
     {
         $this->myLog = $log;
     }
 
     /**
-     * [isAdminRequest description]
-     * @return boolean [description]
+     * Check that request is from admin.
+     * 
+     * @param  Request  $request
+     * @return boolean 
      */
     public function isAdminRequest(Request $request)
     {
@@ -28,9 +41,9 @@ class FaqController extends Controller
     }
 
     /**
-     * Display a faq with answered questions
+     * Display a faq with answered questions.
      *
-     * @param  Request  $request
+     * @param  Request $request
      * @return Response
      **/
     public function show(Request $request)
@@ -42,9 +55,10 @@ class FaqController extends Controller
     }
 
     /**
-     * [add description]
+     * Adds topic.
      * 
-     * @param Request $request [description]
+     * @param Addtopic $request
+     * @return Response
      */
     public function add(AddTopic $request)
     {
@@ -52,29 +66,51 @@ class FaqController extends Controller
         $topic->title = $request->title;
         $topic->save();
         flash('Тема успешно добавлена.', 'success');
-        $this->myLog->write('создал тему "' . $topic->title . '" (' . $topic->id . ')');
+        $this->myLog->write(
+            'создал тему "' .
+            $topic->title .
+            '" (' . $topic->id . ')'
+        );
         return redirect()->back();
     }
 
-
+    /**
+     * Edit topic.
+     * 
+     * @param  EditTopic $request 
+     * @param  string    $id      topics id
+     * @return Response             
+     */
     public function edit(EditTopic $request, $id)
     {
         $topic = Topic::findOrFail($id);
         $topic->title = $request->new_title;
         $topic->save();
         flash('Тема успешно изменена.', 'success');
-        $this->myLog->write('изменил тему "' . $topic->title . '" (' . $topic->id . ')');
+        $this->myLog->write(
+            'изменил тему "' .
+            $topic->title .
+            '" (' . $topic->id . ')'
+        );
         return redirect()->back();
     }
 
-
-    public function delete(Request $request, $id)
+    /**
+     * Delete topic.
+     * 
+     * @param  string $id topics id
+     * @return Response
+     */
+    public function delete($id)
     {
         $topic = Topic::findOrFail($id);
-        $topic->questions()->delete();
         $topic->delete();
         flash('Тема успешно удалена.', 'success');
-        $this->myLog->write('удалил тему "' . $topic->title . '" (' . $topic->id . ')');
+        $this->myLog->write(
+            'удалил тему "' .
+            $topic->title .
+            '" (' . $topic->id . ')'
+        );
         return redirect()->back();
     }
 }

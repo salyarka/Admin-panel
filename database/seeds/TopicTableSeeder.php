@@ -12,12 +12,12 @@ class TopicTableSeeder extends Seeder
     public function run()
     {
         DB::table('topics')->insert([
-            ['title' => 'Basics'],
-            ['title' => 'Mobile'],
-            ['title' => 'Account'],
-            ['title' => 'Payments'],
-            ['title' => 'Privacy'],
-            ['title' => 'Delivery']
+            ['title' => 'Тема 1'],
+            ['title' => 'Тема 2'],
+            ['title' => 'Тема 3'],
+            ['title' => 'Тема 4'],
+            ['title' => 'Тема 5'],
+            ['title' => 'Тема 6']
         ]);
     }
 }

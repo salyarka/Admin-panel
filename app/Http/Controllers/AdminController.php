@@ -11,8 +11,19 @@ use App\Services\Log;
 
 class AdminController extends Controller
 {
+    /**
+     * Log instance.
+     * 
+     * @var Log
+     */
     private $myLog;
 
+    /**
+     * Create a new controller instance.
+     * 
+     * @param Log $log
+     * @return  void
+     */
     public function __construct(Log $log)
     {
         $this->myLog = $log;
@@ -21,7 +32,7 @@ class AdminController extends Controller
     /**
      * Show main admin panel.
      * 
-     * @return [type] [description]
+     * @return Response
      */
     public function show()
     {
@@ -31,8 +42,9 @@ class AdminController extends Controller
 
     /**
      * Add new admin
-     * 
-     * @return
+     *
+     * @param  AddAdmin $request
+     * @return Response
      */
     public function add(AddAdmin $request)
     {
@@ -40,18 +52,24 @@ class AdminController extends Controller
         $admin->login = $request->login;
         $admin->surname = $request->surname;
         $admin->name = $request->name;
-        $admin->password = $request->password;
+        $admin->password = Hash::make($request->password);
         $admin->role = 'admin';        
         $admin->save();
         flash('Новый администратор успешно добавлен.', 'success');
-        $this->myLog->write('добавил администратора "' . $admin->login . '" (' . $admin->id . ')');        
+        $this->myLog->write(
+            'добавил администратора "' .
+            $admin->login .
+            '" (' . $admin->id . ')'
+        );        
         return redirect()->back();
     }
 
     /**
      * Edit admin.
-     * 
-     * @return [type] [description]
+     *
+     * @param  EditAdmin $request
+     * @param  string    $id       admins id
+     * @return Response
      */
     public function edit(EditAdmin $request, $id)
     {
@@ -60,23 +78,32 @@ class AdminController extends Controller
         $admin->surname = $request->new_surname;
         $admin->name = $request->new_name;
         if (strlen($request->new_password) > 0) {
-            $admin->password = Hash::make($request['new_password']);
+            $admin->password = Hash::make($request->new_password);
         }
         $admin->save();
-        $this->myLog->write('изменил данные администратора "' . $admin->login . '" (' . $admin->id . ')');
+        $this->myLog->write(
+            'изменил данные администратора "' .
+            $admin->login .
+            '" (' . $admin->id . ')'
+        );
         return redirect()->back();
     }
 
     /**
      * Delete admin.
-     * 
-     * @return [type] [description]
+     *
+     * @param  string    $id    admins id
+     * @return Response
      */
-    public function delete(Request $request, $id)
+    public function delete($id)
     {
         $admin = Admin::find($id);
         $admin->delete();
-        $this->myLog->write('удалил администратора "' . $admin->login . '" (' . $admin->id . ')');
+        $this->myLog->write(
+            'удалил администратора "' .
+            $admin->login .
+            '" (' . $admin->id . ')'
+        );
         return redirect()->back();
     }
 }

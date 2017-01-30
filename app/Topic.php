@@ -32,33 +32,39 @@ class Topic extends Model
     }
 
     /**
-     * [totalQuestions description]
+     * Counts how many questions are unblocked in topic.
      * 
-     * @param  [type] $id [description]
-     * @return [type]     [description]
+     * @return integer     
      */
     public function totalQuestions()
     {
-        return $this->hasMany('App\Question')->count();
+        return $this->hasMany('App\Question')
+                    ->where('status', '<>', '2')
+                    ->count();
     }
 
     /**
-     * [answeredQuestions description]
+     * Counts how many published questions are in topic.
      * 
-     * @return [type] [description]
+     * @return integer
      */
     public function publishedQuestions()
     {
-        return $this->hasMany('App\Question')->where('status', '=', '1')->count();
+        return $this->hasMany('App\Question')
+                    ->where('status', '=', '1')
+                    ->count();
     }
 
     /**
-     * [noAnswerQuestions description]
+     * Counts how many unanswered questions are in topic.
      * 
-     * @return [type] [description]
+     * @return integer 
      */
     public function noAnswerQuestions()
     {
-        return $this->hasMany('App\Question')->whereNull('answer')->count();
+        return $this->hasMany('App\Question')
+                    ->whereNull('answer')
+                    ->where('status', '<>', '2')
+                    ->count();
     }
 }

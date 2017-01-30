@@ -14,14 +14,20 @@ class CreateQuestionsTable extends Migration
     public function up()
     {
         Schema::create('questions', function (Blueprint $table) {
+            $table->engine = 'InnoDB';
             $table->increments('id');
             $table->date('created_at');
             $table->date('updated_at');
-            $table->integer('topic_id');
+            $table->integer('topic_id')->unsigned();
             $table->boolean('status');
             $table->string('author_name');
             $table->string('text');
             $table->string('answer')->nullable();
+        });
+        Schema::table('questions', function (Blueprint $table) {
+            $table->foreign('topic_id')
+                  ->references('id')->on('topics')
+                  ->onDelete('cascade');
         });
     }
 

@@ -20,7 +20,6 @@ class CheckRole
             return $next($request);
         }
 
-        // remake redirect to admins questions and topics
         return redirect('/admin/faq');
     }
 }

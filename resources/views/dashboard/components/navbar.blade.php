@@ -6,8 +6,8 @@
           <li><a href="{{ url('/admin')}}">Админы</a></li>
         @endif
         <li><a href="{{ url('/admin/faq')}}">Темы</a></li>
-        <li><a href="{{ url('/admin/unanswered')}}">Вопросы без ответов</a></li>
-        <li><a href="{{ url('/admin/blocked')}}">Заблокированные вопросы</a></li>          
+        <li><a href="{{ url('/admin/faq/unanswered')}}">Вопросы без ответов</a></li>
+        <li><a href="{{ url('/admin/blocked')}}">Заблокированные вопросы</a></li>
       </ul>
       
       <ul class="nav navbar-nav navbar-right">

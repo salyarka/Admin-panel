@@ -16,7 +16,7 @@ Route::get('/', function () {
 });
 
 Route::get('/faq', 'FaqController@show');
-Route::post('/faq', 'QuestionController');
+Route::post('/faq', 'TopicController@add');
 
 Route::get('/login', function () {
     return view('login');
@@ -26,14 +26,18 @@ Route::get('/logout', 'AuthController@logout')->middleware('auth');
     
 Route::group(['prefix' => 'admin', 'middleware' => 'auth'], function () {
 
-    Route::get('/unanswered', 'TopicController@showUnAnswered');
-    Route::get('/blocked', 'TopicController@blocked');
+    Route::group(['prefix' => 'blocked'], function () { 
+        Route::get('/', 'TopicController@showBlocked');
+        Route::post('/', 'WordController@addWord');
+        Route::delete('/{id}', 'WordController@deleteWord');
+    });
 
     Route::group(['prefix' => 'faq'], function () {
         Route::get('/', 'FaqController@show');  
         Route::post('/', 'FaqController@add');
         Route::put('/{id}', 'FaqController@edit');
         Route::delete('/{id}', 'FaqController@delete');
+        Route::get('/unanswered', 'TopicController@showUnAnswered');
 
         Route::group(['prefix' => 'topic'], function () {
             Route::get('/{id}', 'TopicController@show');  

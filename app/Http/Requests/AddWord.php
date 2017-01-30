@@ -4,7 +4,7 @@ namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
 
-class AnswerQuestion extends FormRequest
+class AddWord extends FormRequest
 {
     /**
      * Determine if the user is authorized to make this request.
@@ -24,7 +24,7 @@ class AnswerQuestion extends FormRequest
     public function rules()
     {
         return [
-            'answer' => 'required'
+            'word' => 'required|unique:forbiddens'
         ];
     }
 
@@ -36,7 +36,8 @@ class AnswerQuestion extends FormRequest
     public function messages()
     {
         return [
-            'answer.required' => 'Вопрос обязателен для заполнения.'
+            'word.required' => 'Слово обязательно для заполнения.',
+            'word.unique' => 'Такое запрещенное слово уже есть.'            
         ];
     }
 }
