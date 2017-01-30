@@ -3,7 +3,7 @@
     <div class="collapse navbar-collapse" id="myNavbar">
       <ul class="nav navbar-nav">
         @if (Auth::user()->role == 'superAdmin')
-          <li><a href="{{ url('/admin')}}">Админы</a></li>
+          <li><a href="{{ url('/admin')}}">Администраторы</a></li>
         @endif
         <li><a href="{{ url('/admin/faq')}}">Темы</a></li>
         <li><a href="{{ url('/admin/faq/unanswered')}}">Вопросы без ответов</a></li>
