@@ -11,6 +11,10 @@
 |
 */
 
+Route::get('/', function () {
+    return view('index');
+});
+
 Route::get('/faq', 'FaqController@show');
 Route::post('/faq', 'TopicController@add');
 
