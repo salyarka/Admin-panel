@@ -14,7 +14,7 @@
           {{ method_field('PUT') }}
 
           <div class="form-group">
-            <input type="text" class="form-control" name="answer">
+            <textarea class="form-control" rows="3" name="answer"></textarea>
           </div>
 
           <div class="checkbox">
