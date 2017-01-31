@@ -165,15 +165,14 @@ class TopicController extends Controller
             $question->answer = $request->answer;
             if ($request->with_publication == 1) {
                 $question->status = 1;
-            $this->myLog->write(
-                'ответил на вопрос (' .
-                $question->id .
-                ') из темы "' .
-                $question->topic->title .
-                '" (' . $question->topic->id .
-                ') с публикацией'
-            );
-
+                $this->myLog->write(
+                    'ответил на вопрос (' .
+                    $question->id .
+                    ') из темы "' .
+                    $question->topic->title .
+                    '" (' . $question->topic->id .
+                    ') с публикацией'
+                );
             } else{
                 $this->myLog->write(
                     'ответил на вопрос (' .
